@@ -1,19 +1,27 @@
 const express = require("express");
 const connectDB = require("./utils/connectDb");
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
+const cors = require("cors");
 
 dotenv.config();
 // call the connectDB function
 connectDB();
 
 const app = express();
+
 const Post = require("./models/Posts/Posts");
 
 const PORT = 5000;
 
-app.listen(PORT, console.log("server is running")); // it is use to start the server it takes two arguments PORT and a callback function which tells that the server is running
-
+// cors middleware
+const corsOptions = {
+  origin: ["http://localhost:5173"], // Frontend URL
+  credentials: true, // Set to true to allow cookies and authorization headers
+};
+app.use(cors(corsOptions));
 app.use(express.json());
+
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
 app.post("/api/v1/posts/create", async (req, res) => {
   try {
@@ -22,17 +30,10 @@ app.post("/api/v1/posts/create", async (req, res) => {
 
     res.send({
       status: "success",
-      message: "post created successfully",
+      message: "Post created successfully",
       postCreated,
     });
   } catch (err) {
-    res.send({ status: "failed", message: err.message });
+    res.status(500).send({ status: "failed", message: err.message });
   }
 });
-
-
-
-
-
-
-
