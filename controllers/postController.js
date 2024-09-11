@@ -4,8 +4,8 @@ const Post = require("../models/Posts/Posts");
 const PostController = {
   createPost: asyncHandler(async (req, res) => {
     const postBody = req.body;
-    console.log(req.body);
-    const postCreated = await Post.create({...postBody, image:req.file});
+
+    const postCreated = await Post.create({ ...postBody, image: req.file });
 
     res.send({
       status: "success",
