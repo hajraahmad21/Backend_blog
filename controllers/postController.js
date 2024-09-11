@@ -4,10 +4,8 @@ const Post = require("../models/Posts/Posts");
 const PostController = {
   createPost: asyncHandler(async (req, res) => {
     const postBody = req.body;
-    const { title } = req.body;
-    const postFound = await Post.findOne({ title });
-    if (postFound) throw new Error("Post already exists");
-    const postCreated = await Post.create(postBody);
+    console.log(req.body);
+    const postCreated = await Post.create({...postBody, image:req.file});
 
     res.send({
       status: "success",
