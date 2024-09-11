@@ -1,10 +1,9 @@
 const express = require("express");
-
 const postRouter = express.Router();
-
 const PostController = require("../../controllers/postController");
+const upload = require("../../utils/fileUpload");
 
-postRouter.post("/create", PostController.createPost);
+postRouter.post("/create", upload.single("image"), PostController.createPost);
 
 postRouter.get("", PostController.getAllPosts);
 

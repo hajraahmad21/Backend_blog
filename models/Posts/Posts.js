@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const PostSchema = mongoose.Schema({
     description:{type:String, required:true, trim:true, //required:true}
     },
-    title:{type:String, required:true, trim:true},
     image:{type:Object},
     author:{type:mongoose.Schema.Types.ObjectId, ref:"User"},
     nextEarningDate:{type:Date , default:()=> new Date(new Date().getFullYear(), new Date().getMonth()+1, 1)}, // dEFAULT TO first day of next month

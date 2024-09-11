@@ -1,10 +1,11 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const express = require("express");
 const connectDB = require("./utils/connectDb");
-const dotenv = require("dotenv");
 const cors = require("cors");
 const postRouter = require("./router/post/postRouter");
 
-dotenv.config();
 // call the connectDB function
 connectDB();
 
