@@ -5,6 +5,8 @@ const express = require("express");
 const connectDB = require("./utils/connectDb");
 const cors = require("cors");
 const postRouter = require("./router/post/postRouter");
+const userRouter = require("./router/user/userRouter");
+const passport = require("./utils/passport-config");
 
 // call the connectDB function
 connectDB();
@@ -20,11 +22,13 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(passport.initialize());
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
 //Route Handlers
 app.use("/api/v1/posts", postRouter);
+app.use("/api/v1/users", userRouter);
 
 app.use((req, res, next) => {
   res.status(404).send({ status: "failed", message: "Route not found" });
