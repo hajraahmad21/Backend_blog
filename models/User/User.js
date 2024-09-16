@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
     profilePicture:{type:Object, default:null},
     email:{type:String, required:true, unique:true},
     password:{type:String, required:true},
-    googleId:{type:String, required:true, unique:true},
+    googleId:{type:String, required:false}, 
     authMethod:{type:String, enum:["google", "local", "facebook", "github"], required:true, default:"local"},
     passwordResetToken:{type:String, default:null},
     accountVerificationToken:{type:String, default:null},
