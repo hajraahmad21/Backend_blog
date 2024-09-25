@@ -3,6 +3,7 @@ dotenv.config();
 
 const express = require("express");
 const connectDB = require("./utils/connectDb");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const postRouter = require("./router/post/postRouter");
 const userRouter = require("./router/user/userRouter");
@@ -23,6 +24,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(passport.initialize());
+app.use(cookieParser());//middleware to parse cookies so if a user is logged in we can access it
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
