@@ -98,5 +98,12 @@ const userController = {
       return res.status(401).json({ message: "Unauthorized" });
     }
   }),
+  logout: asyncHandler(async (req, res) => {
+    res.clearCookie("token");
+    res.status(200).json({
+      status: "success",
+      message: "User logged out successfully",
+    });
+  }),
 };
 module.exports = userController;
