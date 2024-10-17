@@ -3,7 +3,7 @@ const PostSchema = mongoose.Schema({
     description:{type:String, required:true, trim:true, //required:true}
     },
     image:{type:Object},
-    author:{type:mongoose.Schema.Types.ObjectId, ref:"User"},
+    author:{type:mongoose.Schema.Types.ObjectId, ref:"User" , required:true},
     nextEarningDate:{type:Date , default:()=> new Date(new Date().getFullYear(), new Date().getMonth()+1, 1)}, // dEFAULT TO first day of next month
     thisMonthEarnings:{type:Number, default:0},
     totalEarnings:{type:Number, default:0},
