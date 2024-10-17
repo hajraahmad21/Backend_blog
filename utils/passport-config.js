@@ -19,7 +19,7 @@ passport.use(
           return done(null, false, { message: "User not found" });
         }
 
-        const isMatch = bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
           return done(null, false, { message: "Incorrect password" });
         }
