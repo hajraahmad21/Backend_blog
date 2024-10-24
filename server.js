@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const postRouter = require("./router/post/postRouter");
 const userRouter = require("./router/user/userRouter");
+const categoryRouter = require("./router/category/CategoryRouter")
 const passport = require("./utils/passport-config");
 
 // call the connectDB function
@@ -31,6 +32,7 @@ app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 //Route Handlers
 app.use("/api/v1/posts", postRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/categories", categoryRouter);
 
 app.use((req, res, next) => {
   res.status(404).send({ status: "failed", message: "Route not found" });

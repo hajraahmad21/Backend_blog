@@ -7,7 +7,7 @@ const PostSchema = mongoose.Schema({
     nextEarningDate:{type:Date , default:()=> new Date(new Date().getFullYear(), new Date().getMonth()+1, 1)}, // dEFAULT TO first day of next month
     thisMonthEarnings:{type:Number, default:0},
     totalEarnings:{type:Number, default:0},
-    // category:{type:mongoose.Schema.Types.ObjectId, ref:"Category", required:true},
+    category:{type:mongoose.Schema.Types.ObjectId, ref:"Category", required:true},
     viewsCount:{type:Number, default:0},
     //Interactions
     likes:[{type:mongoose.Schema.Types.ObjectId, ref:"User"}],

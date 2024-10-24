@@ -1,11 +1,16 @@
-const asyncHandler = require("express-async-handler");
+const asyncHandler = require("express-async-handler");  
 const Post = require("../models/Posts/Posts");
+const Category = require("../models/Category/Category");
 
 const PostController = {
   createPost: asyncHandler(async (req, res) => {
     const postBody = req.body;
 
     const postCreated = await Post.create({ ...postBody, image: req.file , author: req.user});
+    const categoryFound = await Category.findById(postBody.category);
+    if (!categoryFound) throw new Error("Category not found");
+    categoryFound.posts.push(postCreated?._id);
+    await categoryFound.save();
 
     res.send({
       status: "success",
@@ -14,7 +19,7 @@ const PostController = {
     });
   }),
   getAllPosts: asyncHandler(async (req, res) => {
-    const posts = await Post.find({});
+    const posts = await Post.find().populate("category"); // it will return ctegory object with posts array
     res.send({
       status: "success",
       message: "Posts fetched successfully",
