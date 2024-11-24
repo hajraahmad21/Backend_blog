@@ -7,4 +7,4 @@ userRouter.get("/auth/google", UserController.googleAuth); // login with google
 userRouter.get("/auth/callback", UserController.googleAuthCallback);// signup with google
 userRouter.get("/checkAuthenticated", UserController.checkAuthenticated);
 userRouter.get("/logout", UserController.logout);
-module.exports = userRouter
+module.exports = userRouter 
