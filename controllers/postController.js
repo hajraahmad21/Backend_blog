@@ -1,4 +1,4 @@
-const asyncHandler = require("express-async-handler");  
+const asyncHandler = require("express-async-handler");
 const Post = require("../models/Posts/Posts");
 const Category = require("../models/Category/Category");
 
@@ -6,7 +6,11 @@ const PostController = {
   createPost: asyncHandler(async (req, res) => {
     const postBody = req.body;
 
-    const postCreated = await Post.create({ ...postBody, image: req.file , author: req.user});
+    const postCreated = await Post.create({
+      ...postBody,
+      image: req.file,
+      author: req.user,
+    });
     const categoryFound = await Category.findById(postBody.category);
     if (!categoryFound) throw new Error("Category not found");
     categoryFound.posts.push(postCreated?._id);
@@ -19,11 +23,23 @@ const PostController = {
     });
   }),
   getAllPosts: asyncHandler(async (req, res) => {
-    const posts = await Post.find().populate("category"); // it will return ctegory object with posts array
+    const { category, description, page = 1, limit = 10 } = req.query;
+    let filter = {};
+    if (category) filter.category = category;
+    if (description) filter.description = { $regex: description, $options: "i" }; // where { $regex: title, $options: "i" }; is mongoDB query to get posts by title but case insensitive
+    const posts = await Post.find(filter)
+      .populate("category") // it will return ctegory object with posts array 
+      .sort({ createdAt: -1 }) //and sort function will sort and return  new posts before
+      .skip((page - 1) * limit) //and sort function will sort and return  new posts before
+      .limit(limit);  // and limit will show how many we want to show per request
+    const totalPosts = await Post.find(filter).countDocuments(filter);
     res.send({
       status: "success",
       message: "Posts fetched successfully",
       posts,
+      currentPage: page,
+      perPage: limit,
+      totalPages: Math.ceil(totalPosts / limit),
     });
   }),
   updatePost: asyncHandler(async (req, res) => {
