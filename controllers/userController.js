@@ -105,5 +105,9 @@ const userController = {
       message: "User logged out successfully",
     });
   }),
+  profile: asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user).populate("posts").select("-password -passwordResetToken -accountVerificationToken"); // we are selecting the password because we don't want to send the password to the client
+    res.json({message:"Profile fetched Successfully", user})
+   })
 };
 module.exports = userController;
