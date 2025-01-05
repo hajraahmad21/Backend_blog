@@ -9,6 +9,8 @@ const postRouter = require("./router/post/postRouter");
 const userRouter = require("./router/user/userRouter");
 const categoryRouter = require("./router/category/CategoryRouter")
 const passport = require("./utils/passport-config");
+const planRouter = require("./router/Plan/PlanRouter");
+const stripePaymentRouter = require("./router/StripePayment/StripePaymentRouter")
 
 // call the connectDB function
 connectDB();
@@ -33,6 +35,8 @@ app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 app.use("/api/v1/posts", postRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/plans", planRouter);
+app.use("/api/v1/stripe", stripePaymentRouter)
 
 app.use((req, res, next) => {
   res.status(404).send({ status: "failed", message: "Route not found" });
