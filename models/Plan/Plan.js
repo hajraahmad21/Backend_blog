@@ -4,7 +4,12 @@ const PlanSchema =new mongoose.Schema({
     planName:{type:String, required:true},
     features:[String],
     limitations:[String],
-    price:{type:Number, required:true},
+    price: { type: Number, required: true },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
 
 },{
     timestamps:true
